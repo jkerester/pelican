@@ -233,6 +233,8 @@ def slugify(value, regex_subs=(), preserve_case=False, use_unicode=False):
     import unicodedata
     import unidecode
 
+
+
     def normalize_unicode(text):
         # normalize text by compatibility composition
         # see: https://en.wikipedia.org/wiki/Unicode_equivalence
@@ -259,7 +261,8 @@ def slugify(value, regex_subs=(), preserve_case=False, use_unicode=False):
     if not preserve_case:
         value = value.lower()
 
-    return value.strip()
+
+    return value.replace(" ", "-")
 
 
 def copy(source, destination, ignores=None):
