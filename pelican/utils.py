@@ -232,6 +232,7 @@ def slugify(value, regex_subs=(), preserve_case=False, use_unicode=False):
 
     import unicodedata
     import unidecode
+    import re
 
 
 
@@ -260,10 +261,8 @@ def slugify(value, regex_subs=(), preserve_case=False, use_unicode=False):
 
     if not preserve_case:
         value = value.lower()
-    value.strip()
 
-
-    return value.replace(" ", "-")
+    return value.strip()
 
 
 def copy(source, destination, ignores=None):
