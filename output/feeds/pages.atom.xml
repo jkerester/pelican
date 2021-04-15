@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>A Pelican Blog - pages</title><link href="/" rel="alternate"></link><link href="/feeds/pages.atom.xml" rel="self"></link><id>/</id><updated>2012-12-07T00:00:00+00:00</updated><entry><title>Override url/save_as</title><link href="/override/" rel="alternate"></link><published>2012-12-07T00:00:00+00:00</published><updated>2012-12-07T00:00:00+00:00</updated><author><name></name></author><id>tag:None,2012-12-07:/override/</id><content type="html">&lt;p&gt;Test page which overrides save_as and url so that this page will be generated
+at a custom location.&lt;/p&gt;
+</content><category term="pages"></category></entry><entry><title>Oh Oh Oh</title><link href="/tag/oh.html" rel="alternate"></link><published>2010-03-14T00:00:00+00:00</published><updated>2010-03-14T00:00:00+00:00</updated><author><name></name></author><id>tag:None,2010-03-14:/tag/oh.html</id><content type="html">&lt;p&gt;This page overrides the listening of the articles under the &lt;em&gt;oh&lt;/em&gt; tag.&lt;/p&gt;
+</content><category term="pages"></category></entry></feed>

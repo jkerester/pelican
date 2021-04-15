@@ -263,7 +263,7 @@ def slugify(value, regex_subs=(), preserve_case=False, use_unicode=False):
         value = value.lower()
 
     newvalue = value.strip()
-
+    #test
     return newvalue.replace(" ", "-")
 
 
