@@ -232,6 +232,7 @@ def slugify(value, regex_subs=(), preserve_case=False, use_unicode=False):
 
     import unicodedata
     import unidecode
+    import re
 
 
 
