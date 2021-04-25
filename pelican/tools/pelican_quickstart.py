@@ -5,7 +5,7 @@ import locale
 import os
 import re
 import smtplib
-import getpass
+
 
 from jinja2 import Environment, FileSystemLoader
 
