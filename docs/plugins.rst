@@ -1,5 +1,5 @@
 .. _plugins:
-Note: When adding plugin  with slugify please ensure regex subs is set to default config for proper hyphenation
+
 Plugins
 #######
 
