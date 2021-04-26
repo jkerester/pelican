@@ -1,4 +1,4 @@
-pipInstalling Pelican
+Installing Pelican
 ##################
 
 Pelican currently runs best on 3.6+; earlier versions of Python are not supported.
