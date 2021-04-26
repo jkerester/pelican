@@ -7,7 +7,7 @@ Description
 ===========
 
 ``pelican-themes`` is a command line tool for managing themes for Pelican. See
-:ref:`settings/themes` for settings related to themes.
+`settings/themes` for settings related to themes.
 
 
 Usage
