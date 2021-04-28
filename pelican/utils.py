@@ -8,6 +8,7 @@ import shutil
 import sys
 import traceback
 import urllib
+from pelican.settings import DEFAULT_CONFIG
 from collections.abc import Hashable
 from contextlib import contextmanager
 from functools import partial
@@ -222,7 +223,7 @@ def pelican_open(filename, mode='r', strip_crs=(sys.platform == 'win32')):
     yield content
 
 
-def slugify(value, regex_subs=(), preserve_case=False, use_unicode=False):
+def slugify(value, regex_subs=(DEFAULT_CONFIG['SLUG_REGEX_SUBSTITUTIONS']), preserve_case=False, use_unicode=False):
     """
     Normalizes string, converts to lowercase, removes non-alpha characters,
     and converts spaces to hyphens.
