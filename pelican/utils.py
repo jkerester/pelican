@@ -230,6 +230,7 @@ def slugify(value, regex_subs=(DEFAULT_CONFIG['SLUG_REGEX_SUBSTITUTIONS']), pres
 
     Took from Django sources.
     """
+    #changed regex subs
 
     import unicodedata
     import unidecode
