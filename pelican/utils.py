@@ -223,7 +223,7 @@ def pelican_open(filename, mode='r', strip_crs=(sys.platform == 'win32')):
     yield content
 
 
-def slugify(value, regex_subs=(DEFAULT_CONFIG['SLUG_REGEX_SUBSTITUTIONS']), preserve_case=False, use_unicode=False):
+def slugify(value, regex_subs=(), preserve_case=False, use_unicode=False):
     """
     Normalizes string, converts to lowercase, removes non-alpha characters,
     and converts spaces to hyphens.
@@ -231,6 +231,10 @@ def slugify(value, regex_subs=(DEFAULT_CONFIG['SLUG_REGEX_SUBSTITUTIONS']), pres
     Took from Django sources.
     """
     #changed regex subs
+    #imported re
+    #changed unicode
+    if regex_subs == ():
+        regex_subs = (DEFAULT_CONFIG['SLUG_REGEX_SUBSTITUTIONS'])
 
     import unicodedata
     import unidecode
