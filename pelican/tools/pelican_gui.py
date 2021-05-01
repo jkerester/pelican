@@ -96,7 +96,7 @@ class App(QMainWindow):
     def initUI(self):
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
-
+        #CONF['siteurl'] =
         #Create boxes for entries
         self.wherelabel = QLabel(
             'Where do you want to create your new website?', self)
@@ -269,10 +269,13 @@ class App(QMainWindow):
 
 
     def on_click(self):
+
         project = os.path.join(
             os.environ.get('VIRTUAL_ENV', os.curdir), '.project')
-        no_path_was_specified = hasattr(args.path, 'is_default_path')
-        if os.path.isfile(project) and no_path_was_specified:
+
+        no_path_was_specified = self.wheretextbox.text()
+
+        if os.path.isfile(project) and no_path_was_specified == '':
             CONF['basedir'] = open(project).read().rstrip("\n")
             print('Using project associated with current virtual environment. '
                   'Will save to:\n%s\n' % CONF['basedir'])
@@ -310,7 +313,7 @@ class App(QMainWindow):
                 fd.close()
         except OSError as e:
             print('Error: {}'.format(e))
-
+        print("testing3")
         try:
             with open(os.path.join(CONF['basedir'], 'publishconf.py'),
                       'w', encoding='utf-8') as fd:
@@ -319,7 +322,7 @@ class App(QMainWindow):
                 fd.close()
         except OSError as e:
             print('Error: {}'.format(e))
-
+        print("testing4")
         if automation:
             try:
                 with open(os.path.join(CONF['basedir'], 'tasks.py'),
