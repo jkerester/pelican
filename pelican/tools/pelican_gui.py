@@ -284,7 +284,8 @@ class App(QMainWindow):
                 os.path.expanduser(self.wheretextbox.text()))
         CONF['sitename'] = self.titletextbox.text()
         CONF['author'] = self.authortextbox.text()
-        CONF['lang'] = self.languagetextbox.text()
+        if self.languagetextbox.text() != '':
+            CONF['lang'] = self.languagetextbox.text()
         if text != '':
             CONF['with_pagination'] = True
             CONF['default_pagination'] = int(text)
@@ -313,7 +314,6 @@ class App(QMainWindow):
                 fd.close()
         except OSError as e:
             print('Error: {}'.format(e))
-        print("testing3")
         try:
             with open(os.path.join(CONF['basedir'], 'publishconf.py'),
                       'w', encoding='utf-8') as fd:
@@ -322,7 +322,6 @@ class App(QMainWindow):
                 fd.close()
         except OSError as e:
             print('Error: {}'.format(e))
-        print("testing4")
         if automation:
             try:
                 with open(os.path.join(CONF['basedir'], 'tasks.py'),
