@@ -83,7 +83,6 @@ class _DEFAULT_PATH_TYPE(str):
 _DEFAULT_PATH = _DEFAULT_PATH_TYPE(os.curdir)
 
 class App(QMainWindow):
-    #text = ''
     def __init__(self):
         super().__init__()
         self.title = 'Pelican GUI'
@@ -96,7 +95,7 @@ class App(QMainWindow):
     def initUI(self):
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
-
+        #CONF['siteurl'] =
         #Create boxes for entries
         self.wherelabel = QLabel(
             'Where do you want to create your new website?', self)
@@ -266,13 +265,14 @@ class App(QMainWindow):
                 CONF['github_pages_branch'] = \
                     _GITHUB_PAGES_BRANCHES['project']
 
-
-
     def on_click(self):
+
         project = os.path.join(
             os.environ.get('VIRTUAL_ENV', os.curdir), '.project')
-        no_path_was_specified = hasattr(args.path, 'is_default_path')
-        if os.path.isfile(project) and no_path_was_specified:
+
+        no_path_was_specified = self.wheretextbox.text()
+
+        if os.path.isfile(project) and no_path_was_specified == '':
             CONF['basedir'] = open(project).read().rstrip("\n")
             print('Using project associated with current virtual environment. '
                   'Will save to:\n%s\n' % CONF['basedir'])
@@ -281,7 +281,8 @@ class App(QMainWindow):
                 os.path.expanduser(self.wheretextbox.text()))
         CONF['sitename'] = self.titletextbox.text()
         CONF['author'] = self.authortextbox.text()
-        CONF['lang'] = self.languagetextbox.text()
+        if self.languagetextbox.text() != '':
+            CONF['lang'] = self.languagetextbox.text()
         if text != '':
             CONF['with_pagination'] = True
             CONF['default_pagination'] = int(text)
@@ -310,7 +311,6 @@ class App(QMainWindow):
                 fd.close()
         except OSError as e:
             print('Error: {}'.format(e))
-
         try:
             with open(os.path.join(CONF['basedir'], 'publishconf.py'),
                       'w', encoding='utf-8') as fd:
@@ -319,7 +319,6 @@ class App(QMainWindow):
                 fd.close()
         except OSError as e:
             print('Error: {}'.format(e))
-
         if automation:
             try:
                 with open(os.path.join(CONF['basedir'], 'tasks.py'),
