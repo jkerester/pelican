@@ -83,7 +83,6 @@ class _DEFAULT_PATH_TYPE(str):
 _DEFAULT_PATH = _DEFAULT_PATH_TYPE(os.curdir)
 
 class App(QMainWindow):
-    #text = ''
     def __init__(self):
         super().__init__()
         self.title = 'Pelican GUI'
@@ -265,8 +264,6 @@ class App(QMainWindow):
             else:
                 CONF['github_pages_branch'] = \
                     _GITHUB_PAGES_BRANCHES['project']
-
-
 
     def on_click(self):
 
