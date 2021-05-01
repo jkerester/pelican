@@ -8,6 +8,7 @@ import shutil
 import sys
 import traceback
 import urllib
+from pelican.settings import DEFAULT_CONFIG
 from collections.abc import Hashable
 from contextlib import contextmanager
 from functools import partial
@@ -229,6 +230,11 @@ def slugify(value, regex_subs=(), preserve_case=False, use_unicode=False):
 
     Took from Django sources.
     """
+    #changed regex subs
+    #imported re
+    #changed unicode
+    if regex_subs == ():
+        regex_subs = (DEFAULT_CONFIG['SLUG_REGEX_SUBSTITUTIONS'])
 
     import unicodedata
     import unidecode
