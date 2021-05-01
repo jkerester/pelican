@@ -171,6 +171,12 @@ def ask_timezone(question, default, tzurl):
                   ' (check [{}])'.format(tzurl))
     return r
 
+def ask_sample_data(question, default):
+    """ prompt the user to use sample data before starting"""
+    while True:
+        r = ask(question,str, default)
+
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -208,67 +214,84 @@ needed by Pelican.
             ask('Where do you want to create your new web site?',
                 answer=str, default=args.path)))
 
-    CONF['sitename'] = ask('What will be the title of this web site?',
+    sample = input("would you like to populate this with sample data? (y/n): ")
+    username = input("Name of author: ")
+    if sample.lower() == 'y':
+        CONF['sitename'] = "sample"
+        CONF['author'] = username
+        CONF['LANG'] = args.lang
+        CONF['SITEURL'] = False
+        CONF['with_pagination'] = True
+        CONF['default_pagination'] = 5
+        CONF['timezone'] = 'est'
+
+
+
+    else:
+
+
+
+        CONF['sitename'] = ask('What will be the title of this web site?',
                            answer=str, default=args.title)
-    CONF['author'] = ask('Who will be the author of this web site?',
+        CONF['author'] = ask('Who will be the author of this web site?',
                          answer=str, default=args.author)
-    CONF['lang'] = ask('What will be the default language of this web site?',
+        CONF['lang'] = ask('What will be the default language of this web site?',
                        str, args.lang or CONF['lang'], 2)
 
-    if ask('Do you want to specify a URL prefix? e.g., https://example.com  ',
-           answer=bool, default=True):
-        CONF['siteurl'] = ask('What is your URL prefix? (see '
-                              'above example; no trailing slash)',
-                              str, CONF['siteurl'])
+        if ask('Do you want to specify a URL prefix? e.g., https://example.com  ',
+            answer=bool, default=True):
+            CONF['siteurl'] = ask('What is your URL prefix? (see '
+                                'above example; no trailing slash)',
+                                str, CONF['siteurl'])
 
-    CONF['with_pagination'] = ask('Do you want to enable article pagination?',
+        CONF['with_pagination'] = ask('Do you want to enable article pagination?',
                                   bool, bool(CONF['default_pagination']))
 
-    if CONF['with_pagination']:
-        CONF['default_pagination'] = ask('How many articles per page '
+        if CONF['with_pagination']:
+            CONF['default_pagination'] = ask('How many articles per page '
                                          'do you want?',
-                                         int, CONF['default_pagination'])
-    else:
-        CONF['default_pagination'] = False
+                                            int, CONF['default_pagination'])
+        else:
+            CONF['default_pagination'] = False
 
-    CONF['timezone'] = ask_timezone('What is your time zone?',
+        CONF['timezone'] = ask_timezone('What is your time zone?',
                                     CONF['timezone'], _TZ_URL)
 
-    if ask('Do you want a mailing list', answer=bool, default=True):
+        if ask('Do you want a mailing list', answer=bool, default=True):
 
-        string = ""
-        while not string == 'q':
-            string = input("Enter an email to the mailing list or enter q to quit\n")
-            regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
-            if (re.search(regex, string)):
-                with open(os.path.join(CONF['basedir'], 'mailinglist.txt'), 'a', encoding='utf-8') as fd:
+            string = ""
+            while not string == 'q':
+                string = input("Enter an email to the mailing list or enter q to quit\n")
+                regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
+                if (re.search(regex, string)):
+                    with open(os.path.join(CONF['basedir'], 'mailinglist.txt'), 'a', encoding='utf-8') as fd:
                         fd.write(string +"\n")
-            elif (string == "q"):
-                continue
-            else:
-                print("That is not a valid email")
+                elif (string == "q"):
+                    continue
+                else:
+                    print("That is not a valid email")
 
-        if ask('Do you want to send a notice to being added email?(your email must allow access to less secure apps)', answer=bool, default=True):
-            server = smtplib.SMTP("smtp.gmail.com", 587)
-            server.starttls()
-            emailsuccess = 0
-            while emailsuccess == 0:
-                try:
-                    usrn = input("Type in your email address\n")
-                    passn = input("Type in your password\n")
-                    server.login(usrn, passn)
-                    emailsuccess = 1
-                except:
-                    print("Either username or password is wrong. You may want to make sure your email allows access to less secure apps")
-            msg = "You have been added to a mailing list"
-            subj = "You were added!"
-            body = "Subject: {}\n\n{}".format(subj, msg)
-            mailfile = open(os.path.join(CONF['basedir'], 'mailinglist.txt'), "r")
-            for x in mailfile:
-                if (re.search(regex, usrn)):
-                    server.sendmail(usrn, x.split('\n')[0], body)
-            mailfile.close()
-            server.quit()
+            if ask('Do you want to send a notice to being added email?(your email must allow access to less secure apps)', answer=bool, default=True):
+                server = smtplib.SMTP("smtp.gmail.com", 587)
+                server.starttls()
+                emailsuccess = 0
+                while emailsuccess == 0:
+                    try:
+                        usrn = input("Type in your email address\n")
+                        passn = input("Type in your password\n")
+                        server.login(usrn, passn)
+                        emailsuccess = 1
+                    except:
+                        print("Either username or password is wrong. You may want to make sure your email allows access to less secure apps")
+                msg = "You have been added to a mailing list"
+                subj = "You were added!"
+                body = "Subject: {}\n\n{}".format(subj, msg)
+                mailfile = open(os.path.join(CONF['basedir'], 'mailinglist.txt'), "r")
+                for x in mailfile:
+                    if (re.search(regex, usrn)):
+                        server.sendmail(usrn, x.split('\n')[0], body)
+                mailfile.close()
+                server.quit()
 
 
     automation = ask('Do you want to generate a tasks.py/Makefile '
