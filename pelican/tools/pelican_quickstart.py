@@ -365,12 +365,27 @@ needed by Pelican.
         os.makedirs(os.path.join(CONF['basedir'], 'content'))
 
         if sample == 'y':
-            os.makedirs(os.path.join(CONF['basedir'], 'content', 'pages'))
-            os.makedirs(os.path.join(CONF['basedir'], 'content', 'exciting'))
-            os.makedirs(os.path.join(CONF['basedir'], 'content', 'theme'))
+            try:
+
+                os.makedirs(os.path.join(CONF['basedir'], 'content', 'pictures'))
+                os.makedirs(os.path.join(CONF['basedir'], 'content', 'extra'))
+                os.makedirs(os.path.join(CONF['basedir'], 'content', 'pages'))
+                os.makedirs(os.path.join(CONF['basedir'], 'exciting'))
+                os.makedirs(os.path.join(CONF['basedir'], 'theme'))
+            except OSError as e:
+                print('Error: {}'.format(e))
+
             with open(os.path.join(CONF['basedir'], 'content','pages', 'sample.html'),
                  'w', encoding='utf-8') as fd:
                 fd.write(tg.text)
+                fd.close()
+            with open(os.path.join(CONF['basedir'], 'content','pages', 'article1.rst'),
+                 'w', encoding='utf-8') as fd:
+                fd.write(tg.article1)
+                fd.close()
+            with open(os.path.join(CONF['basedir'], 'content','extra', 'lame.txt'),
+                 'w', encoding='utf-8') as fd:
+                fd.write("some lame text")
                 fd.close()
 
 
@@ -382,6 +397,7 @@ needed by Pelican.
         os.makedirs(os.path.join(CONF['basedir'], 'output'))
     except OSError as e:
         print('Error: {}'.format(e))
+
 
     try:
         with open(os.path.join(CONF['basedir'], 'pelicanconf.py'),
