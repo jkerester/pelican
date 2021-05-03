@@ -4,6 +4,7 @@ import locale
 import os
 import re
 import smtplib
+import textGenerator as tg
 
 
 from jinja2 import Environment, FileSystemLoader
@@ -217,7 +218,7 @@ needed by Pelican.
     sample = input("would you like to populate this with sample data? (y/n): ")
     username = input("Name of author: ")
     if sample.lower() == 'y':
-        CONF['sitename'] = "sample"
+        CONF['sitename'] = "sample.com"
         CONF['author'] = username
         CONF['LANG'] = args.lang
         CONF['SITEURL'] = False
@@ -296,6 +297,8 @@ needed by Pelican.
 
     automation = ask('Do you want to generate a tasks.py/Makefile '
                      'to automate generation and publishing?', bool, True)
+    #if automation == False:
+
 
     if automation:
         if ask('Do you want to upload your website using FTP?',
@@ -360,6 +363,18 @@ needed by Pelican.
 
     try:
         os.makedirs(os.path.join(CONF['basedir'], 'content'))
+
+        if sample == 'y':
+            os.makedirs(os.path.join(CONF['basedir'], 'content', 'pages'))
+            os.makedirs(os.path.join(CONF['basedir'], 'content', 'exciting'))
+            os.makedirs(os.path.join(CONF['basedir'], 'content', 'theme'))
+            with open(os.path.join(CONF['basedir'], 'content','pages', 'sample.html'),
+                 'w', encoding='utf-8') as fd:
+                fd.write(tg.text)
+                fd.close()
+
+
+
     except OSError as e:
         print('Error: {}'.format(e))
 
