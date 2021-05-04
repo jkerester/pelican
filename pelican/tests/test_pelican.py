@@ -1,5 +1,6 @@
 import locale
 import logging
+import smtplib
 import os
 import subprocess
 import sys
@@ -38,6 +39,18 @@ def recursiveDiff(dcmp):
 class TestPelican(LoggedTestCase):
     # general functional testing for pelican. Basically, this test case tries
     # to run pelican in different situations and see how it behaves
+    def test_mailing(self):
+        try:
+            server = smtplib.SMTP("smtp.gmail.com", 587)
+            server.starttls()
+            usrn = "pelicantestmailing@gmail.com"
+            passw = "Pelican2021!"
+            server.login(usrn, passw)
+            server.quit()
+            self.assertTrue(True, "Success!")
+        except:
+            #if either the usrn or passw is incorrect, or there is an issue with the server this assert will cause the test to fail
+            self.assertTrue(False, "Failed!")
 
     def setUp(self):
         super().setUp()
