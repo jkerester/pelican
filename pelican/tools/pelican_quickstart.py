@@ -4,7 +4,6 @@ import locale
 import os
 import re
 import smtplib
-import textGenerator as tg
 
 
 from jinja2 import Environment, FileSystemLoader
@@ -294,13 +293,12 @@ needed by Pelican.
                                     CONF['timezone'], _TZ_URL)
 
         if ask('Do you want a mailing list', answer=bool, default=True):
-
             string = ""
             while not string == 'q':
                 string = input("Enter an email to the mailing list or enter q to quit\n")
                 regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
                 if (re.search(regex, string)):
-                    with open(os.path.join(CONF['basedir'], 'mailinglist.txt'), 'a', encoding='utf-8') as fd:
+                    with open('mailinglist.txt', 'a', encoding='utf-8') as fd:
                         fd.write(string +"\n")
                 elif (string == "q"):
                     continue
@@ -322,7 +320,7 @@ needed by Pelican.
                 msg = "You have been added to a mailing list"
                 subj = "You were added!"
                 body = "Subject: {}\n\n{}".format(subj, msg)
-                mailfile = open(os.path.join(CONF['basedir'], 'mailinglist.txt'), "r")
+                mailfile = open('mailinglist.txt', "r")
                 for x in mailfile:
                     if (re.search(regex, usrn)):
                         server.sendmail(usrn, x.split('\n')[0], body)
